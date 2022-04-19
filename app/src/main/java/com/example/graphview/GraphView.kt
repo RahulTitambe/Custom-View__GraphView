@@ -7,8 +7,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.widget.ImageView
-import android.widget.Toast
-import kotlin.math.abs
 
 @SuppressLint("AppCompatCustomView")
 class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (context, attributeSet) {
@@ -25,19 +23,13 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
     var pointCircleColor = Color.RED
 
     var pointOuterCircle = Paint(Paint.ANTI_ALIAS_FLAG)
-    var pointOuterCircleColor = Color.RED
 
     var values : Array<Int>? = null
     set(value) {
         field = value
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        if (values == null){
-            return
-        }
-
+    init {
         paint.color = lineColor
         paint.strokeWidth = 5F
 
@@ -48,11 +40,18 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
         pointOuterCircle.color = pointCircleColor
         pointOuterCircle.strokeWidth = 3F
 
+        bgLinesPaint.color = backgroundLinesColor
+        bgLinesPaint.textSize=30F
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        if (values == null){
+            return
+        }
 
         var temp = height.toFloat() / 10
 
-
-        bgLinesPaint.color = backgroundLinesColor
         canvas?.drawLine(0F,height.toFloat()-1,width.toFloat(),height.toFloat()-1,bgLinesPaint)
         for (i in 0 until 10){
             canvas?.drawLine(0F,
@@ -61,8 +60,6 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
             temp*i,
             bgLinesPaint)
         }
-
-        bgLinesPaint.textSize=30F
 
         canvas?.drawText("100", 0F,25F, bgLinesPaint)
         for(i in 0 until 110 step 10) {
