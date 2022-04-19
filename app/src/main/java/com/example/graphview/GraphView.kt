@@ -41,6 +41,14 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
         paint.color = lineColor
         paint.strokeWidth = 5F
 
+        pointCircle.strokeWidth = 10F
+        pointCircle.color = pointCircleColor
+
+        pointOuterCircle.style = Paint.Style.STROKE
+        pointOuterCircle.color = pointCircleColor
+        pointOuterCircle.strokeWidth = 3F
+
+
         var temp = height.toFloat() / 10
 
 
@@ -84,19 +92,12 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
                 paint
             )
 
-            pointCircle.strokeWidth = 10F
-            pointCircle.color = pointCircleColor
-
             canvas?.drawCircle(
                 xAxisPoint * i,
                 height - (((tempNum.toFloat())/10) * yAxisPoint),
                 7F,
                 pointCircle
             )
-
-            pointOuterCircle.style = Paint.Style.STROKE
-            pointOuterCircle.color = pointCircleColor
-            pointOuterCircle.strokeWidth = 3F
 
             canvas?.drawCircle(
                 xAxisPoint * i,
@@ -105,5 +106,19 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
                 pointOuterCircle
             )
         }
+
+        canvas?.drawCircle(
+            xAxisPoint * values!!.size,
+            height - (((values!![values!!.size-1].toFloat())/10) * yAxisPoint),
+            7F,
+            pointCircle
+        )
+
+        canvas?.drawCircle(
+            xAxisPoint * values!!.size,
+            height - (((values!![values!!.size-1].toFloat())/10) * yAxisPoint),
+            20F,
+            pointOuterCircle
+        )
     }
 }
