@@ -15,11 +15,17 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
 
     constructor(context: Context) : this(context, null)
 
-    var paint = Paint()
+    var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     var lineColor = Color.GREEN
 
-    var bgLinesPaint = Paint()
+    var bgLinesPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     var backgroundLinesColor = Color.LTGRAY
+
+    var pointCircle = Paint(Paint.ANTI_ALIAS_FLAG)
+    var pointCircleColor = Color.RED
+
+    var pointOuterCircle = Paint(Paint.ANTI_ALIAS_FLAG)
+    var pointOuterCircleColor = Color.RED
 
     var values : Array<Int>? = null
     set(value) {
@@ -76,6 +82,27 @@ class GraphView(context : Context, attributeSet: AttributeSet?) : ImageView (con
                 (xAxisPoint * i)+xAxisPoint,
                 height - (((values!![i].toFloat())/10) * yAxisPoint),
                 paint
+            )
+
+            pointCircle.strokeWidth = 10F
+            pointCircle.color = pointCircleColor
+
+            canvas?.drawCircle(
+                xAxisPoint * i,
+                height - (((tempNum.toFloat())/10) * yAxisPoint),
+                7F,
+                pointCircle
+            )
+
+            pointOuterCircle.style = Paint.Style.STROKE
+            pointOuterCircle.color = pointCircleColor
+            pointOuterCircle.strokeWidth = 3F
+
+            canvas?.drawCircle(
+                xAxisPoint * i,
+                height - (((tempNum.toFloat())/10) * yAxisPoint),
+                20F,
+                pointOuterCircle
             )
         }
     }
